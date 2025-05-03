@@ -13,16 +13,23 @@ const AddCoffee = () => {
       const photo = form.photo.value;
       const newData = {name,chef,supplier,taste,category,details,photo}; 
       console.log(newData);
+      fetch("http://localhost:5100/coffee",{
+        method:'post',
+        headers:{
+          "content-type" : "application/json"
+        },
+        body: JSON.stringify(newData)
+      })
+      .then(res=>res.json)
+      .then(data=>{
+        console.log(data);
+      })
     }
   return (
     <div className=" flex items-center justify-center px-4 py-8">
       <div className="max-w-4xl w-full bg-black rounded-2xl shadow-lg p-8">
      
         <h2 className="text-3xl font-bold text-center mb-4 text-primary">Add New Coffee</h2>
-        <p className="text-center text-sm mb-8 text-base-content/70">
-          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
-          The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here.
-        </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
