@@ -1,7 +1,12 @@
 import React from "react";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-const AddCoffee = () => {
-  const handleSubmit = (e) => {
+
+
+const UpdateSingle = () => {
+    const data = useLoaderData();
+    const { _id, name, chef, supplier, taste, category, details, photo } = data;
+      const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
@@ -13,8 +18,8 @@ const AddCoffee = () => {
     const photo = form.photo.value;
     const newData = { name, chef, supplier, taste, category, details, photo };
     console.log(newData);
-    fetch("http://localhost:5100/coffee", {
-      method: "post",
+    fetch(`http://localhost:5100/coffee/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
@@ -22,22 +27,22 @@ const AddCoffee = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.insertedId);
-        if (data.insertedId) {
+        console.log(data);
+        if (data.modifiedCount) {
           Swal.fire({
             title: "Success",
-            text: "User added",
+            text: "User Updated",
             icon: "success",
             confirmButtonText: "Cool",
           });
         }
       });
   };
-  return (
-    <div className=" flex items-center justify-center px-4 py-8">
+    return (
+          <div className=" flex items-center justify-center px-4 py-8">
       <div className="max-w-4xl w-full bg-black rounded-2xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center mb-4 text-primary">
-          Add New Coffee
+          Update Coffee : {name}
         </h2>
 
         {/* Form */}
@@ -51,6 +56,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="name"
+                defaultValue={name}
                 placeholder="Enter coffee name"
                 className="input input-bordered w-full"
               />
@@ -64,6 +70,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="chef"
+                defaultValue={chef}
                 placeholder="Enter coffee chef"
                 className="input input-bordered w-full"
               />
@@ -77,6 +84,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="supplier"
+                defaultValue={supplier}
                 placeholder="Enter coffee supplier"
                 className="input input-bordered w-full"
               />
@@ -90,6 +98,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="taste"
+                defaultValue={taste}
                 placeholder="Enter coffee taste"
                 className="input input-bordered w-full"
               />
@@ -103,6 +112,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="category"
+                defaultValue={category}
                 placeholder="Enter coffee category"
                 className="input input-bordered w-full"
               />
@@ -116,6 +126,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="details"
+                defaultValue={details}
                 placeholder="Enter coffee details"
                 className="input input-bordered w-full"
               />
@@ -130,6 +141,7 @@ const AddCoffee = () => {
             <input
               type="text"
               name="photo"
+              defaultValue={photo}
               placeholder="Enter photo URL"
               className="input input-bordered w-full"
             />
@@ -147,7 +159,7 @@ const AddCoffee = () => {
         </form>
       </div>
     </div>
-  );
+    );
 };
 
-export default AddCoffee;
+export default UpdateSingle;
