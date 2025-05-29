@@ -14,8 +14,9 @@ const SignUp = () => {
         createUser(email,pass)
         .then(result=>{
           console.log(result.user,"from firebase");
-          const creationTime = result.user.metadata.creationTime;
-          const forServer = {name,email,creationTime}
+          const creationTime = result?.user?.metadata?.creationTime;
+          const lastLogged = result?.user?.metadata?.lastSignInTime;
+          const forServer = {name,email,creationTime,lastLogged}
           fetch("http://localhost:5100/user",{
             method:'POST',
             headers:{

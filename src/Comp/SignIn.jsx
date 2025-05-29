@@ -12,7 +12,21 @@ const SignIn = () => {
     const pass = e.target.Password.value;
     signin(email,pass)
     .then(result=>{
-      console.log(result.user);
+      console.log(result.user,"from firebase");
+      const lastLogged = result?.user?.metadata?.lastSignInTime;
+      const update = {email,lastLogged}
+      // console.log(update);
+      fetch("http://localhost:5100/user",{
+        method: 'PATCH',
+        headers:{
+          'content-type' : 'application/json'
+        },
+        body: JSON.stringify(update)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data,"from server");
+      })
       if(result.user?.providerId){
         Swal.fire("Logged in!");
       }

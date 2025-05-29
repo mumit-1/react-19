@@ -43,7 +43,8 @@ const Users = () => {
       <tr>
         <th>Name</th>
         <th>email</th>
-        <th>time</th>
+        <th>Created time</th>
+        <th>Last logged in</th>
         <th>action</th>
       </tr>
     </thead>
@@ -55,6 +56,7 @@ const Users = () => {
         <th>{a.name}</th>
         <td>{a.email}</td>
         <td>{a.creationTime}</td>
+        <td>{a?.lastLogged}</td>
         <td>
             <button className='btn'>E</button>
             <button onClick={()=>handleDelete(a._id)} className='btn'>X</button>
