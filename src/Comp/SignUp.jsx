@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthProvider } from "../Provider/Provider";
+import Swal from "sweetalert2";
 
 
 const SignUp = () => {
@@ -24,7 +25,11 @@ const SignUp = () => {
           })
           .then(res=>res.json())
           .then(data=>{
+            // 
             console.log(data , "from backend");
+            if(data.insertedId){
+              Swal.fire("User Created!");
+            }
           })
         })
         .catch(error=>{
